@@ -47,6 +47,7 @@ public class InhoudBeheer {
 	private AnchorPane anker = new AnchorPane();
 	
 	private Venster venster;
+	private Canvas onzichtbaarTekenvlak;
 	private double pixelGrootte;
 	private GraphicsContext g;
 	private double pixels[];
@@ -72,6 +73,26 @@ public class InhoudBeheer {
 		});
 		
 		handmatig.setOnAction(e -> {
+			afbeelding = tekenvlak.snapshot(new SnapshotParameters(), afbeelding);
+			onzichtbaarTekenvlak.getGraphicsContext2D().clearRect(0, 0, onzichtbaarTekenvlak.getWidth(), onzichtbaarTekenvlak.getHeight());
+			onzichtbaarTekenvlak.getGraphicsContext2D().drawImage(afbeelding, 0, 0, tekenvlak.getWidth(), tekenvlak.getHeight(), 0, 0, 28, 28);
+			afbeelding = onzichtbaarTekenvlak.snapshot(new SnapshotParameters(), afbeelding);
+			
+			byte[] data = new byte[venster.breedte * venster.breedte * 4];
+			afbeelding.getPixelReader().getPixels(0, 0, venster.breedte, venster.breedte, PixelFormat.getByteBgraInstance(), data, 0, venster.breedte * 4);
+			for (int i = 0; i < venster.breedte; i++)
+				for (int j = 0; j < venster.breedte; j++)
+					pixels[j * venster.breedte + i] = data[(j * venster.breedte + i) * 4] < 0 ? 0.0 : (1.0 - data[(j * venster.breedte + i) * 4] / 255.0);
+
+			// Tekent pixels in het tekenvlak
+//			g.setFill(Color.BLACK);
+//			for (int i = 0; i < venster.breedte; i++) {
+//				for (int j = 0; j < venster.breedte; j++) {
+//					g.setFill(new Color(pixels[j * venster.breedte + i], pixels[j * venster.breedte + i], pixels[j * venster.breedte + i], 1.0));
+//					g.fillRect(i * pixelGrootte, j * pixelGrootte, pixelGrootte, pixelGrootte);
+//				}
+//			}
+//			
 			venster.netwerk.propageerVoorwaarts(pixels);
 			double waarden[] = venster.netwerk.uitgangsWaarden();
 			double totaal = 0.0;
@@ -82,21 +103,21 @@ public class InhoudBeheer {
 				totaal += waarden[i];
 			}
 			
-			boolean sorted = false;
-			while (!sorted) {
-				sorted = true;
+			boolean gesorteerd = false;
+			while (!gesorteerd) {
+				gesorteerd = true;
 				
 				for (int i = 1; i < waarden.length; i++) {
 					if (waarden[max[i]] > waarden[max[i - 1]]) {
 						int temp = max[i];
 						max[i] = max[i - 1];
 						max[i - 1] = temp;
-						sorted = false;
+						gesorteerd = false;
 					}
 				}
 			}
 			
-			for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < (waarden.length > 2 ? 2 : waarden.length); i++) {
 				if (voorspellingen[i] != null)
 					anker.getChildren().remove(voorspellingen[i]);
 				voorspellingen[i] = new Label(venster.mogelijkheden.get(max[i]) + " " + String.format("%.2f", waarden[max[i]] / totaal * 100.0).replace(',', '.') + "%");
@@ -134,26 +155,6 @@ public class InhoudBeheer {
 		tekenvlak.setOnMouseReleased(e -> {
 			if (e.getButton() == MouseButton.PRIMARY)
 				vorigeX = vorigeY = -1;
-			
-			if (e.getButton() == MouseButton.SECONDARY) {
-				afbeelding = tekenvlak.snapshot(new SnapshotParameters(), afbeelding);
-				g.drawImage(afbeelding, 0, 0, tekenvlak.getWidth(), tekenvlak.getHeight(), 0, 0, 28, 28);
-				afbeelding = tekenvlak.snapshot(new SnapshotParameters(), afbeelding);
-				
-				byte[] data = new byte[venster.breedte * venster.breedte * 4];
-				afbeelding.getPixelReader().getPixels(0, 0, venster.breedte, venster.breedte, PixelFormat.getByteBgraInstance(), data, 0, venster.breedte * 4);
-				for (int i = 0; i < venster.breedte; i++)
-					for (int j = 0; j < venster.breedte; j++)
-						pixels[j * venster.breedte + i] = data[(j * venster.breedte + i) * 4] < 0 ? 0.0 : (1.0 - data[(j * venster.breedte + i) * 4] / 255.0);
-				
-				g.setFill(Color.BLACK);
-				for (int i = 0; i < venster.breedte; i++) {
-					for (int j = 0; j < venster.breedte; j++) {
-						g.setFill(new Color(pixels[j * venster.breedte + i], pixels[j * venster.breedte + i], pixels[j * venster.breedte + i], 1.0));
-						g.fillRect(i * pixelGrootte, j * pixelGrootte, pixelGrootte, pixelGrootte);
-					}
-				}
-			}
 		});
 	}
 	
@@ -162,6 +163,7 @@ public class InhoudBeheer {
 		
 		pixelGrootte = tekenvlak.getWidth() / venster.breedte;
 		pixels = new double[venster.breedte * venster.breedte];
+		onzichtbaarTekenvlak = new Canvas(venster.breedte, venster.breedte);
 		g.setLineWidth(pixelGrootte * 0.8);
 		
 		int tussen = 0;
