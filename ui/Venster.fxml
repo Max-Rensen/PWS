@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="665.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MenuBeheer">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+            <Menu mnemonicParsing="false" text="Bestand">
+               <items>
+                  <MenuItem fx:id="importeer" mnemonicParsing="false" text="Importeer" />
+                  <MenuItem fx:id="exporteer" mnemonicParsing="false" text="Exporteer" />
+                  <MenuItem fx:id="train" mnemonicParsing="false" text="Train" />
+               </items></Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="232.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.TrainDataBeheer">
+   <children>
+      <AnchorPane layoutX="274.0" layoutY="14.0" prefHeight="186.0" prefWidth="262.0" style="-fx-border-width: 1; -fx-border-color: black;">
+         <children>
+            <Canvas fx:id="errorCanvas" height="184.0" width="260.0" />
+         </children>
+      </AnchorPane>
+      <GridPane layoutX="14.0" layoutY="34.0" prefHeight="134.0" prefWidth="240.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="129.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="111.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Gemiddelde error" GridPane.rowIndex="2">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label text="Totale iteraties" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label text="Huidige iteratie">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label text="Leergraad" GridPane.rowIndex="3">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="iteratieLabel" text="0" GridPane.columnIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="maxIteratiesLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorLabel" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="leergraadLabel" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <Label layoutX="14.0" layoutY="6.0" text="Waarden">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="280.0" layoutY="205.0" text="Tijd--&gt;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="228.0" layoutY="154.0" rotate="-90.0" text="Error --&gt;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="stop" layoutX="14.0" layoutY="193.0" mnemonicParsing="false" text="Stop" />
+      <Button fx:id="trainVerder" layoutX="65.0" layoutY="193.0" mnemonicParsing="false" text="Train Verder" />
+   </children>
+</AnchorPane>
