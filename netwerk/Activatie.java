@@ -4,7 +4,7 @@ public class Activatie {
 	
 	// Een lijst van alle beschikbare acitvatie functies
 	public static enum FUNCTIE {
-		TANH, SIGMOÏDE, STAP, RELU
+		SIGMOÏDE, TANH, STAP, RELU
 	};
 
 	// De huidige activatie functie, deze kan aangepast worden

@@ -8,8 +8,12 @@
 
 <AnchorPane prefHeight="175.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MogelijkhedenBeheer">
    <children>
-      <TextField fx:id="naam" layoutX="137.0" layoutY="18.0" promptText="Afbeelding" />
       <Label layoutX="16.0" layoutY="20.0" text="Naam">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="60.0" text="Aantal">
          <font>
             <Font size="15.0" />
          </font>
@@ -19,14 +23,10 @@
             <Font size="15.0" />
          </font>
       </Label>
+      <TextField fx:id="naam" layoutX="137.0" layoutY="18.0" promptText="Afbeelding" />
+      <TextField fx:id="aantal" layoutX="137.0" layoutY="58.0" text="1000" />
+      <TextField fx:id="bestandsLocatie" layoutX="137.0" layoutY="98.0" promptText="C:\Documents" />
       <Button fx:id="kiesLocatie" layoutX="137.0" layoutY="137.0" mnemonicParsing="false" text="Kies locatie" />
       <Button fx:id="OK" layoutX="18.0" layoutY="137.0" mnemonicParsing="false" text="OK" />
-      <TextField fx:id="bestandsLocatie" layoutX="137.0" layoutY="98.0" promptText="C:\Documents" />
-      <Label layoutX="15.0" layoutY="60.0" text="Aantal">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="aantal" layoutX="137.0" layoutY="58.0" text="1000" />
    </children>
 </AnchorPane>

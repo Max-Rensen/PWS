@@ -3,15 +3,19 @@ package ui;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import javafx.util.Pair;
+import netwerk.Activatie;
 import netwerk.Netwerk;
 
 public class TrainVensterBeheer {
@@ -24,11 +28,11 @@ public class TrainVensterBeheer {
 	@FXML
 	private Button trainHuidig = new Button();
 	@FXML
-	private TextField iteraties = new TextField();
-	@FXML
 	private TextField leergraad = new TextField();
 	@FXML
 	private TextField neuronen = new TextField();
+	@FXML
+	private SplitMenuButton activatieFunctie = new SplitMenuButton();	
 	@FXML
 	private ListView<Integer> lagenLijst = new ListView<Integer>();
 	@FXML
@@ -67,10 +71,17 @@ public class TrainVensterBeheer {
 			layout[layout.length - 1] = venster.mogelijkheden.size();
 			
 			venster.netwerk = new Netwerk(layout, true);
-			venster.maxIteraties = Integer.parseInt(iteraties.getText());
 			venster.netwerk.leergraad = Double.parseDouble(leergraad.getText());
 			venster.popupStadia.remove(venster.popupStadia.size() - 1).close();
 			venster.weergeefTrainData(data);
+		});
+		
+		List<String> functies = Arrays.asList("Sigmoïde", "Tanh", "Stap", "RELU");
+		activatieFunctie.getItems().forEach(item -> {
+			item.setOnAction(e -> {
+				Activatie.huidig = Activatie.FUNCTIE.values()[functies.indexOf(item.getText())];
+				activatieFunctie.setText(activatieFunctie.getItems().get(functies.indexOf(item.getText())).getText());
+			});
 		});
 		
 		trainHuidig.setOnAction(e -> {

@@ -15,8 +15,6 @@ public class TrainDataBeheer {
 	@FXML
 	private Label iteratieLabel = new Label();
 	@FXML
-	private Label maxIteratiesLabel = new Label();
-	@FXML
 	private Label errorLabel = new Label();
 	@FXML
 	private Label leergraadLabel = new Label();
@@ -33,9 +31,13 @@ public class TrainDataBeheer {
 	private int huidigeIteratie;
 	private int errorVerzachting;
 	private int maxPunten;
+	private int huidigeDrempelScore;
 	private double gemiddeldeError;
 	private double maxError;
 	private GraphicsContext g;
+	
+	final private int maxDrempelScore = 5;
+	final private double drempelError = 0.05;
 	
 	public void initialiseerVenster(Venster venster, ArrayList<Pair<double[], Integer>> data) {
 		this.data = data;
@@ -47,7 +49,6 @@ public class TrainDataBeheer {
 		maxPunten = 50;
 		
 		leergraadLabel.setText(Double.toString(venster.netwerk.leergraad));
-		maxIteratiesLabel.setText(Integer.toString(venster.maxIteraties));
 		
 		venster.popupStadia.get(venster.popupStadia.size() - 1).setOnCloseRequest(e -> {
 			if (e.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST)
@@ -69,7 +70,6 @@ public class TrainDataBeheer {
 	}
 	
 	private void trainNetwerk() {
-		int maxIteraties = Integer.parseInt(maxIteratiesLabel.getText());
 		new AnimationTimer() {
             public void handle(long t) {
 				int index = (int) (Math.random() * data.size());
@@ -98,12 +98,14 @@ public class TrainDataBeheer {
 					
 					gemiddeldeError /= errorVerzachting;
 					voegErrorToe(gemiddeldeError);
+					if (gemiddeldeError <= drempelError) 
+						huidigeDrempelScore++;
 					gemiddeldeError = 0.0;
 				}
 				
-				iteratieLabel.setText(Integer.toString(huidigeIteratie));
+				iteratieLabel.setText(Integer.toString(huidigeIteratie++));
 				
-				if (huidigeIteratie++ >= maxIteraties)
+				if (huidigeDrempelScore >= maxDrempelScore)
 					this.stop();
             }
 		}.start();

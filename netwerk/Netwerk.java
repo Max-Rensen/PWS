@@ -138,4 +138,26 @@ public class Netwerk {
 		
 		return waarden;
 	}
+	
+	public ArrayList<ArrayList<Double>> bemachtigWegingen() {
+		ArrayList<ArrayList<Double>> wegingen = new ArrayList<>();
+		
+		for (int i = 0; i < neuronen.size() - 1; i++) {
+			ArrayList<Double> laagWegingen = new ArrayList<>();
+			for (int j = 0; j < neuronen.get(i).size() - (bias ? 1 : 0); j++)
+				for (Synaps s : neuronen.get(i).get(j).synapsen)
+					laagWegingen.add(s.weging);
+			
+			wegingen.add(laagWegingen);
+		}
+		
+		return wegingen;
+	}
+	
+	public void laadWegingen(ArrayList<ArrayList<Double>> wegingen) {
+		for (int i = 0; i < neuronen.size() - 1; i++)
+			for (int j = 0; j < neuronen.get(i).size() - (bias ? 1 : 0); j++)
+				for (Synaps s : neuronen.get(i).get(j).synapsen)
+					s.weging = wegingen.get(i).get(j);
+	}
 }

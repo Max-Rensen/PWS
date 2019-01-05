@@ -16,24 +16,18 @@
             <Canvas fx:id="errorCanvas" height="184.0" width="260.0" />
          </children>
       </AnchorPane>
-      <GridPane layoutX="14.0" layoutY="34.0" prefHeight="134.0" prefWidth="240.0">
+      <GridPane layoutX="14.0" layoutY="34.0" prefHeight="121.0" prefWidth="240.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="129.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="111.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Gemiddelde error" GridPane.rowIndex="2">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label text="Totale iteraties" GridPane.rowIndex="1">
+            <Label text="Gemiddelde error" GridPane.rowIndex="1">
                <font>
                   <Font size="15.0" />
                </font>
@@ -43,7 +37,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label text="Leergraad" GridPane.rowIndex="3">
+            <Label text="Leergraad" GridPane.rowIndex="2">
                <font>
                   <Font size="15.0" />
                </font>
@@ -53,17 +47,12 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="maxIteratiesLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="errorLabel" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="errorLabel" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label fx:id="leergraadLabel" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="leergraadLabel" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="15.0" />
                </font>

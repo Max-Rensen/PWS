@@ -22,7 +22,6 @@ public class Venster extends Application {
 	public BorderPane houder;
 	public Netwerk netwerk;
 	public double gemiddeldeError;
-	public int maxIteraties;
 	public int breedte;
 	
 	public ArrayList<String> mogelijkheden;

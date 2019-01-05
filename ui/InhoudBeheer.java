@@ -83,6 +83,42 @@ public class InhoudBeheer {
 			for (int i = 0; i < venster.breedte; i++)
 				for (int j = 0; j < venster.breedte; j++)
 					pixels[j * venster.breedte + i] = data[(j * venster.breedte + i) * 4] < 0 ? 0.0 : (1.0 - data[(j * venster.breedte + i) * 4] / 255.0);
+			
+			int minX = -1, maxX = 0;
+			int minY = -1, maxY = 0;
+			
+			for (int i = 0; i < venster.breedte; i++) {
+				for (int j = 0; j < venster.breedte; j++) {
+					if (pixels[j * venster.breedte + i] > 0.0) {
+						if (minX == -1)
+							minX = i;
+						maxX = i;
+					}
+					
+					if (pixels[i * venster.breedte + j] > 0.0) {
+						if (minY == -1)
+							minY = i;
+						maxY = i;
+					}
+				}
+			}
+			
+			int dx = venster.breedte / 2 - (minX + (maxX - minX) / 2);
+			int dy = venster.breedte / 2 - (minY + (maxY - minY) / 2);
+			
+			double pixelsKopie[] = new double[venster.breedte * venster.breedte];
+			for (int i = 0; i < venster.breedte; i++) {
+				for (int j = 0; j < venster.breedte; j++) {
+					int x = i - dx;
+					int y = j - dy;
+					if (x < 0 || y < 0  || x > venster.breedte - 1 || y > venster.breedte - 1)
+						pixelsKopie[j * venster.breedte + i] = 0.0;
+					else
+						pixelsKopie[j * venster.breedte + i] = pixels[y * venster.breedte + x];
+				}
+			}
+			
+			pixels = pixelsKopie;
 
 			// Tekent pixels in het tekenvlak
 //			g.setFill(Color.BLACK);
@@ -92,7 +128,7 @@ public class InhoudBeheer {
 //					g.fillRect(i * pixelGrootte, j * pixelGrootte, pixelGrootte, pixelGrootte);
 //				}
 //			}
-//			
+			
 			venster.netwerk.propageerVoorwaarts(pixels);
 			double waarden[] = venster.netwerk.uitgangsWaarden();
 			double totaal = 0.0;
